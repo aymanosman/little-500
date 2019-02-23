@@ -1,0 +1,21 @@
+* R1->x860 compiler
+
+** Description:
+Siek describes a compilation model for the R1 language that uses a series of sequential passes. These passes incrementally transform the initial ~R1~ s-expression to ~x860~ assembly via a ~C0~ intermediate representation.
+
+Under Siek's guidence, the following steps are prescribed.
+#+BEGIN_SRC:
+r1 --------uniquify--------->  
+  r1 --remove-complex-opera*-->
+    r1 ----explicate-control---->
+      c0 -----uncover-locals------>
+        c0 ---select-instructions--->
+          x860* ----assign-homes------>
+            x860* ------patch-inst------>
+              x860 -------print-x86------->
+#+END_SRC
+
+Test modules for several of these steps leverage a behaviorally equivilent interpretater defined in ~r1/interp.rkt~.
+
+** Use
+** Testing
