@@ -15,8 +15,7 @@
 (define (ec-assign b x k)
   (match b
     [(? symbol?)
-     `(seq (assign ,x ,b) ,k)
-     ]
+     `(seq (assign ,x ,b) ,k)]
     [(? fixnum?)
      `(seq (assign ,x ,b) ,k)]
     [`(let ([,x1 ,b1]) ,k1)

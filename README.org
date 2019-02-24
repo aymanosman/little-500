@@ -1,7 +1,8 @@
 * R1->x860 compiler
+A simple multi-pass compiler that transforms an arithmetic s-expression language to a subset of ~x86~ assembly.
 
 ** Description:
-Siek describes a compilation model for the R1 language that uses a series of sequential passes. These passes incrementally transform the initial ~R1~ s-expression to ~x860~ assembly via a ~C0~ intermediate representation.
+Siek describes a compilation model for the ~R1~ language that uses a series of sequential passes. These passes incrementally transform the initial ~R1~ s-expression to ~x860~ assembly via a ~C0~ intermediate representation.
 
 Under Siek's guidence, the following steps are prescribed.
 #+BEGIN_SRC:
@@ -18,4 +19,23 @@ r1 --------uniquify--------->
 Test modules for several of these steps leverage a behaviorally equivilent interpretater defined in ~r1/interp.rkt~.
 
 ** Use
+Top level functionality is not yet implementated. This project remains under development.
+
 ** Testing
+*** Design
+Much of the compiler's functionality involves symbol generation, so equality testing might require definition of an s-expression equality operator that uses pattern-matching to ignore symbols.
+
+To avoid such a distraction, a property-based approach is used instead: Transformations, while changing sematics, should preserve evaluation result. Therefore, interpreting a program before and after a transformation should evaluate to the same value.
+
+On this basis, tests simply loop through a set of programs defined in ~test/test-programs.rkt~, checking that interpreting the program before and after the transformation under test yields the same value.
+
+With a suitable ~R1~ (or ~C0~) program generator, programs may instead be generated at test time and the examples can be migrated to documentation.
+
+*** Running
+For now, tests should be run on a per-module basis. All tests are included as sub-modules paired with relevant functionality.
+
+Use ~raco~ to evoke tests from the command-line:
+
+#+BEGIN_SRC bash
+raco test interp.rkt # third arg is name of file with tests
+#+END_SRC
