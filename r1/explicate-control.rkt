@@ -27,6 +27,14 @@
     [else
      (exn `ec-assign "no matching clause" b)]))
 
+;; TODO: delete
+(explicate-control
+ '(program ()
+           (let ([x 40])
+             (let ([y (+ 2 2)])
+               (let ([x x])
+                 (+ x y))))))
+
 (define (explicate-control e)
   (match e
     [`(program ,info ,exp)

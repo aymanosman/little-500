@@ -44,7 +44,7 @@
 
   (for-each
    (lambda (program)
-     (test-eq? "Transformation yields semantically equivilent R1 program"
+     (test-eq? "Transformation yields semantically equivilant R1 program"
                ((interp-R1 '()) (remove-complex-opera* program))
                ((interp-R1 '()) program)))
    R1-examples))
