@@ -1,7 +1,5 @@
 #lang racket
 
-;; TODO: generalize interpretation to handle all test cases
-
 (provide interp-R1)
 
 (require "utils.rkt")

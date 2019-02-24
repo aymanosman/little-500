@@ -27,6 +27,19 @@
                  (let ([x x])
                    (+ x y)))))
 
+    (program () (let ([y (let ([x.1 (+ 2 2)])
+                           x.1)])
+                  y))
+
+    (program () (let ([y (let ([x.1 42])
+                           x.1)])
+                  y))
+
+    (program () (let ([y (let ([x.1 (+ 2 2)])
+                           (let ([x.2 38])
+                             (+ x.1 x.2)))])
+                  y))
+
     (program ()
              (let ([x (let ([x 42])
                         x)])
