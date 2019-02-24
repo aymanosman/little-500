@@ -15,30 +15,22 @@
 
 (define (ec-assign b x k)
   (match b
-    ;; [(? symbol?)
-    ;;  ]
+    [(? symbol?)
+     `(seq (assign ,x ,b) ,k)
+     ]
     [(? fixnum?)
      `(seq (assign ,x ,b) ,k)]
     [`(let ([,x1 ,b1]) ,k1)
      (define new-k
        (ec-assign k1 x (ec-tail k)))
      (ec-assign b1 x1 new-k)]
-    ;; TODO: edit to accomodate body
-    ;; [`(let ([,x1 ,b1]) ,k1)
-    ;;  (define new-k
-    ;;    (ec-assign k1 x (ec-tail k)))
-    ;;  (ec-assign b1 x1 new-k)]
     [`(,op ,es ...)
      `(seq (assign ,x ,b) ,(ec-tail k))]))
 
 ;; TODO: fix `ec-tail`, then write tests
 (ec-tail '(let ([y (let ([x.1 (+ 2 2)])
-                     something-else)])
+                     x.1)])
             y))
-
-(let ([y (let ([x.1 (+ 2 2)])
-           x.1)])
-  y)
 
 ;; (ec-tail '(let ([y (let ([x.1 42])
 ;;                      x.1)])
