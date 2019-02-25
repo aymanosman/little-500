@@ -1,7 +1,7 @@
 * R1->x860 compiler
 A simple multi-pass compiler that transforms an arithmetic s-expression language to a subset of ~x86~ assembly.
 
-** Description:
+** Description
 Siek describes a compilation model for the ~R1~ language that uses a series of sequential passes. These passes incrementally transform the initial ~R1~ s-expression to ~x860~ assembly via a ~C0~ intermediate representation.
 
 Under Siek's guidence, the following steps are prescribed.
@@ -16,7 +16,7 @@ r1 --------uniquify--------->
               x860 -------print-x86------->
 #+END_SRC
 
-Test modules for several of these steps leverage a behaviorally equivilent interpretater defined in ~r1/interp.rkt~.
+Test modules for several of these steps leverage a behaviorally equivilant ~R1~ interpreter defined in ~r1/interp.rkt~. A ~C0~ interpreter is also included that is useful for testing transformations to this intermediate representation.
 
 ** Use
 Top level functionality is not yet implementated. This project remains under development.
