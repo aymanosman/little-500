@@ -1,6 +1,7 @@
 #lang racket
 
-(provide interp-R1)
+(provide interp-R1
+         interp-C0)
 
 (require "utils.rkt")
 

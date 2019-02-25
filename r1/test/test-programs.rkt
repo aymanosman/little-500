@@ -1,8 +1,8 @@
 #lang racket
 
-(provide R1-examples)
+(provide R1-examples
+         C0-examples)
 
-;; TODO: add descriptions; transform to alist
 (define R1-examples
   '((program ()
              (let ([x 42]) x))
@@ -64,3 +64,10 @@
              (+ 45 (- (+ (let ([y (+ 20 (- 15))])
                            y) 2)
                       10)))))
+
+(define C0-examples
+  '((program ()
+             (seq (assign x.1 (+ 2 2))
+                  (seq (assign x.2 38)
+                       (seq (assign y (+ x.1 x.2))
+                            (return y)))))))
