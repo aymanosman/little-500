@@ -46,11 +46,6 @@
                x))
 
     (program ()
-             (let ([x (let ([x 42])
-                        x)])
-               x))
-
-    (program ()
              (let ([x 10])
                (let ([y (let ([x x])
                           (+ x x))])

@@ -5,24 +5,21 @@
 (define (ec-tail e)
   (match e
     [(? symbol?) `(return ,e)]
-    ;; TODO: debug
+    [`(return ,exp) e]
     [`(let ([,x ,b]) ,k)
      (define new-k (ec-tail k))
      (ec-assign b x new-k)]
-    ;; [`(let ([,x ,b]) ,k)
-    ;;  (ec-assign b x k)]
-    [`(,op ,es ...) `(return ,e)]
+    ;; add minus case
+    [`(- ,es ...) `(return ,e)]
+    [`(+ ,es ...) `(return ,e)]
     [else
      (exn `ec-tail "no matching clause" e)]))
 
 (define (ec-assign b x k)
   (match b
-    ;; TODO editing
     [(? symbol?)
      (define new-k (ec-tail k))
      `(seq (assign ,x ,b) ,new-k)]
-    ;; [(? symbol?)
-    ;;  `(seq (assign ,x ,b) ,k)]
     [(? fixnum?)
      `(seq (assign ,x ,b) ,k)]
     [`(let ([,x1 ,b1]) ,k1)
@@ -50,14 +47,30 @@
     (compose remove-complex-opera*
              (uniquify '())))
 
-  ;; TODO: replace with eq testing once c0-interp is complete
   (for-each
    (lambda (program)
      (define pretreated-program (pretreat-R1 program))
      (test-eq? "Transformation to C0 preserves meaning"
-               (explicate-control pretreated-program)
-               ;; ((interp-C0 '())
-               ;;  (explicate-control pretreated-program)
-               ;;  )
+               ((interp-C0 '())
+                (explicate-control pretreated-program))
                ((interp-R1 '()) pretreated-program)))
    R1-examples))
+
+;; failing:
+;; '(program () (let ([y (let ([x.1 (+ 2 2)])
+;;                         x.1)])
+;;                y))
+
+;; see similiar working case:
+;; '(program () (let ([y (let ([x.1 (+ 2 2)])
+;;                         (let ([x.2 38])
+;;                           (+ x.1 x.2)))])
+;;                y))
+
+;; also broken
+;; '(program ()
+;;           (let ([x 10])
+;;             (let ([y (let ([x x])
+;;                        (+ x x))])
+;;               (let ([x x])
+;;                 (+ x y 12)))))
