@@ -26,7 +26,8 @@
 
   (define get-locals cdaadr)
 
-  (test-case "Compare locals collected by uncover-locals to predetermined list"
-             (check-equal?
-              (get-locals (uncover-locals example-c0))
-              '(x.1 x.2 y))))
+  (test-case
+   "Compare locals collected by uncover-locals to predetermined list"
+   (check-equal?
+    (get-locals (uncover-locals example-c0))
+    '(x.1 x.2 y))))

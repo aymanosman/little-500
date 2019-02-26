@@ -6,10 +6,10 @@
   (match e
     [(? symbol?) `(return ,e)]
     [`(return ,exp) e]
+    [`(seq ,rest ...) e]
     [`(let ([,x ,b]) ,k)
      (define new-k (ec-tail k))
      (ec-assign b x new-k)]
-    ;; add minus case
     [`(- ,es ...) `(return ,e)]
     [`(+ ,es ...) `(return ,e)]
     [else
@@ -55,22 +55,3 @@
                 (explicate-control pretreated-program))
                ((interp-R1 '()) pretreated-program)))
    R1-examples))
-
-;; failing:
-;; '(program () (let ([y (let ([x.1 (+ 2 2)])
-;;                         x.1)])
-;;                y))
-
-;; see similiar working case:
-;; '(program () (let ([y (let ([x.1 (+ 2 2)])
-;;                         (let ([x.2 38])
-;;                           (+ x.1 x.2)))])
-;;                y))
-
-;; also broken
-;; '(program ()
-;;           (let ([x 10])
-;;             (let ([y (let ([x x])
-;;                        (+ x x))])
-;;               (let ([x x])
-;;                 (+ x y 12)))))
